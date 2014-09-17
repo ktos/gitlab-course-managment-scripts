@@ -39,12 +39,11 @@
 import argparse
 import csv
 import sys
-import json
+import configparser
 import gitlab   # Requires pyapi-gitlab https://github.com/Itxaka/pyapi-gitlab
 
-with open('config.json') as json_data:
-    config = json.load(json_data)
-    json_data.close()
+config = configparser.ConfigParser()
+config.read('config.ini')
 
 ACCESS_LEVEL = 'reporter'               # group access level
 
@@ -57,9 +56,9 @@ parser.add_argument('groupname',
 args = parser.parse_args()
 
 # Create a GitLab object
-git = gitlab.Gitlab(config['gitlab_url'],
-                    config['gitlab_token'],
-                    verify_ssl=config['verify_ssl'])
+git = gitlab.Gitlab(config['DEFAULT']['gitlab_url'],
+                    config['DEFAULT']['gitlab_token'],
+                    verify_ssl=config['DEFAULT'].getboolean('verify_ssl'))
 # Get id of group
 for group in git.getgroups():
     if group['path'] == args.groupname:
@@ -77,7 +76,7 @@ for row in c:
 
     name = row[1] + ' ' + row[0]        # rebuild full name
     username = row[2]
-    email = row[2] + config['email_domain']       # create email address
+    email = row[2] + config['DEFAULT']['email_domain']       # create email address
 
     # GitLab will not include the password in the notification email.
     # GitLab will send confirmation email that will log user into their account

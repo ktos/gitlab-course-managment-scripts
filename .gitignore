@@ -1,6 +1,6 @@
 # Configuration file contails private GitLab Token - not to be stored in repository #
 #####################################################################################
-config.json
+config.ini
 
 # Compiled source #
 ###################

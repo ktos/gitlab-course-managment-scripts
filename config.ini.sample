@@ -1,0 +1,6 @@
+[DEFAULT]
+gitlab_username = kwurst
+gitlab_url = https://git.cs.worcester.edu
+email_domain = @worcester.edu
+verify_ssl = off
+gitlab_token = xxxxxxxxxxxxxxxxxxxx
